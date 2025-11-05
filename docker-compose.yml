@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend_container
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    networks:
+      - mern-net
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_container
+    ports:
+      - "3000:4173"
+    depends_on:
+      - backend
+    networks:
+      - mern-net
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - mern-net
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: worker_container
+    command: node api/workers/summaryWorker.js
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+    networks:
+      - mern-net
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+    - mern-net
+
+volumes:
+  mongo_data:
+
+networks:
+  mern-net:
+    driver: bridge
