@@ -9,7 +9,7 @@ const createSummary = async (req, res) => {
   try {
     const { article } = req.body;
     if (!article) return res.status(400).json({ message: "Article is required." });
-
+    console.log("article enqueuing for summarization: ", article)
     // Cache key logic
     const cacheKey = `summary:${crypto.createHash("sha256").update(article).digest("hex")}`;
     const cachedSummary = await redis.get(cacheKey);
@@ -32,7 +32,7 @@ const createSummary = async (req, res) => {
 
     // Cache result
     await redis.set(cacheKey, JSON.stringify(summary), "EX", 21600);
-
+    console.log("article cached successfully.")
     return res.status(200).json({
       statusCode: 200,
       summary,
