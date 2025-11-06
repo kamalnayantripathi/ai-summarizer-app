@@ -13,8 +13,8 @@ import summaryRouter from "./api/routes/summary.routes.js";
 const app = express();
 
 // 🧭 These two lines are needed to properly resolve __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 //CORS
 app.use(cors({
