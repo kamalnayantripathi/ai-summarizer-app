@@ -2,7 +2,7 @@ import { Summary } from "../models/summary.model.js";
 import redis from "../config/redisClient.js";
 import crypto from "crypto"
 import { summaryQueue } from "../queues/summaryQueue.js";
-import { Queue, QueueEvents, Worker, Job } from "bullmq";
+import { QueueEvents } from "bullmq";
 
 
 const createSummary = async (req, res) => {
@@ -33,6 +33,7 @@ const createSummary = async (req, res) => {
     // Cache result
     await redis.set(cacheKey, JSON.stringify(summary), "EX", 21600);
     console.log("article cached successfully.")
+
     return res.status(200).json({
       statusCode: 200,
       summary,
