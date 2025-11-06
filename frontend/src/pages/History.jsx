@@ -8,7 +8,8 @@ import { AuthContext } from "../context/AuthContext"
 
         const [summaries, setSummaries] = useState([])
         const [showArticle, setShowArticle] = useState(false);
-        const [loading, setLoading] = useState(false)
+        const [openArticleId, setOpenArticleId] = useState(null);
+        const [loading, setLoading] = useState(true)
         const navigate = useNavigate();
         const {user, token} = useContext(AuthContext)
         console.log(user,token)
@@ -177,7 +178,7 @@ if (loading) {
                                 {/* Article Section - Collapsible */}
                                 <div className="border-t border-slate-200 pt-4">
                                     <button
-                                        onClick={() => setShowArticle(!showArticle)}
+                                        onClick={() => setOpenArticleId(openArticleId === summary._id ? null : summary._id)}
                                         className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors duration-200 group"
                                     >
                                         <div className="flex items-center gap-3">
@@ -189,15 +190,16 @@ if (loading) {
                                                     Original Article
                                                 </span>
                                                 <span className="text-xs text-slate-500">
-                                                    {summary.article?.split(' ').length || 0} words • Click to {showArticle ? 'hide' : 'view'}
+                                                        {summary.article?.split(' ').length || 0} words • Click to{' '}
+                                                        {openArticleId === summary._id ? 'hide' : 'view'}
                                                 </span>
                                             </div>
                                         </div>
-                                        <i className={`bi bi-chevron-${showArticle ? 'up' : 'down'} text-slate-400 text-lg transition-transform duration-200`}></i>
+                                        <i className={`bi bi-chevron-${openArticleId === summary._id ? 'up' : 'down'} text-slate-400 text-lg transition-transform duration-200`}></i>
                                     </button>
 
                                     {/* Expandable Article Content */}
-                                    {showArticle && (
+                                    {openArticleId === summary._id && (
                                         <div className="mt-4 bg-slate-50 rounded-xl p-6 border border-slate-200 animate-fade-in">
                                             <p className="text-slate-700 leading-relaxed whitespace-pre-wrap max-h-96 overflow-y-auto">
                                                 {summary.article}
