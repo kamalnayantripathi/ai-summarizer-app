@@ -4,7 +4,7 @@ import redis from "../config/redisClient.js";
 import apiClient from "../config/apiClient.js";
 
 export const summaryWorker = new Worker(
-  "summaryQueue", // must match queue name
+  "summaryQueue", 
   async job => {
     const { article } = job.data;
 
@@ -17,7 +17,7 @@ export const summaryWorker = new Worker(
   { connection: redis }
 );
 
-// Optional: listen to worker events for debugging
+// listen to worker events for debugging
 summaryWorker.on("completed", job => {
   console.log(`✅ Job ${job.id} completed`);
 });
