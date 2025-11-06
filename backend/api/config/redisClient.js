@@ -1,9 +1,7 @@
 import { Redis } from 'ioredis';
-
-const redis = new Redis({
-  host: process.env.REDIS_HOST || 'redis_container', // matches docker-compose service name
-  port: 6379,
-  maxRetriesPerRequest: null, 
+console.log(process.env.REDIS_HOST)
+const redis = new Redis(process.env.REDIS_HOST, {
+  maxRetriesPerRequest: null,
 });
 
 redis.on('connect', () => {
