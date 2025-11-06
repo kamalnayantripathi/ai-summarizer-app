@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 import app from "./app.js"
 import dotenv from "dotenv";
 import "./api/config/redisClient.js";
-import "./api/queues/summaryQueue.js"
+import "./api/queues/summaryQueue.js";
+import "./api/workers/summaryWorker.js";
 
 dotenv.config();
 
