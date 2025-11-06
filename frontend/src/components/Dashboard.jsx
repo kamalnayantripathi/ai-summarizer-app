@@ -9,7 +9,7 @@ export const Dashboard = () => {
     const [name, setName] = useState("Kamal")
     const { token, user } = useContext(AuthContext);
     const navigate = useNavigate();
-    console.log(user, token)
+    // console.log(user, token)
 
     useEffect(() => {
         if(!token){

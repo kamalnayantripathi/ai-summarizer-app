@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
     try {
       const response = await axiosClient.get("/user")
       const data = response.data;
-      console.log(data)
+      // console.log(data)
       setUser(response.data.user)
     } catch (error) {
       console.log("Failed to fetch user profile: ",error.message)
@@ -36,7 +36,7 @@ const login = async (credentials) => {
       const response = await axiosClient.post("/users/login", credentials)
       const data = response.data;
       if(data.token){
-          console.log("User logged in successfully: ", data)
+          // console.log("User logged in successfully: ", data)
           setUser(data.user)
           setToken(data.token)
           localStorage.setItem("token", data.token);

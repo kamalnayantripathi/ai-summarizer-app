@@ -20,23 +20,23 @@ export const Summarize = () => {
     }, [])
 
     const handleChange = (e) => {
-        // console.log(e.target.value)
+        // // console.log(e.target.value)
         setArticle(e.target.value)
     }
-    // console.log("article: ",article, "\n summary: ",summary)   
+    // // console.log("article: ",article, "\n summary: ",summary)   
 
     const articleSummaryAPI = async(e) => {
         e.preventDefault();
         try {
             setLoading(true)
             // const text = e.target.article.value;
-            console.log("article", article)
+            // console.log("article", article)
             const response = await axiosClient.post("/articles/create-summary", { article })
             const data = response.data;
-            console.log("data: ",data)
+            // console.log("data: ",data)
             setSummary(data.summary)   
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if(error.response.status===401){
                 toast.error("Please login again.")
                 navigate("/login")
@@ -53,10 +53,10 @@ export const Summarize = () => {
         try {
             const response = await axiosClient.post("/articles/summary",{ article, summaryText: summary })
             const data = response.data;
-            console.log("saved: ",data)
+            // console.log("saved: ",data)
             navigate("/history")
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if(error.response.status===401){
                 toast.error("Please login again.")
                 navigate("/login")

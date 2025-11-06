@@ -18,7 +18,7 @@ export const SignUp = () => {
 
     const handleChange = (e) => {
         const name = e.target.name
-        console.log(errors)
+        // console.log(errors)
         setFormData((prev) => ({
             ...prev,
             [name]: e.target.value
@@ -31,7 +31,7 @@ export const SignUp = () => {
     }
 
     const handleConfirmPassword = (e) => {
-        console.log(e.target.value, formData.password)
+        // console.log(e.target.value, formData.password)
         if(e.target.value !== formData.password){
             setErrors(prev => ({
                 ...prev,
@@ -64,14 +64,14 @@ export const SignUp = () => {
             return;
         }
         setLoading(true)
-        console.log("proceeding to signup: ", formData)
+        // console.log("proceeding to signup: ", formData)
         try {
             const response = await axiosClient.post("/users/register", formData )
-            console.log(response);
+            // console.log(response);
             toast.success("User registered successfully.")
             navigate("/login")
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             toast.error(error?.response?.data?.message || error.message)
         } finally{
             setLoading(false)

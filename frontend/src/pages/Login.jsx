@@ -43,14 +43,14 @@ export const Login = () => {
             setErrors(validationErrors)
             return;
         }
-        console.log("sending login request: ",formData)
+        // console.log("sending login request: ",formData)
         try {
             const success = await login(formData)
             if(success){
                 navigate('/')
             }
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             toast.error(error?.response?.data?.message || error.message)
         }
     }

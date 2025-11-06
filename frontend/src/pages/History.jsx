@@ -12,7 +12,7 @@ import { AuthContext } from "../context/AuthContext"
         const [loading, setLoading] = useState(true)
         const navigate = useNavigate();
         const {user, token} = useContext(AuthContext)
-        console.log(user,token)
+        // console.log(user,token)
 
         const formatDate = (dateString) => {
             const date = new Date(dateString);
@@ -33,10 +33,10 @@ import { AuthContext } from "../context/AuthContext"
             setLoading(true)
             const response = await axiosClient.get("/articles/summaries")
             const data = response.data;
-            console.log(data);
+            // console.log(data);
             setSummaries(data.summaries)
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if(error.response.status===401){
                 toast.error("Please login again.")
                 navigate("/login")
@@ -49,20 +49,23 @@ import { AuthContext } from "../context/AuthContext"
     }
 
     const deleteSummary = async(id) => {
-        console.log(id)
+        // console.log(id)
+        setLoading(true)
         try {
             const response = await axiosClient.delete(`/articles/summary/${id}`)
             const data = response.data;
             toast.success("Summary deleted successfully.")
             setSummaries(prevSummaries => prevSummaries.filter(s => s._id !== id))
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if(error.response.status===401){
                 toast.error("Please login again.")
                 navigate("/login")
             }else{
                 toast.error(error.response?.data?.message || error.message)
             }
+        } finally{
+            setLoading(false)
         }
     }
     useEffect(()=>{
@@ -143,7 +146,6 @@ if (loading) {
                                     
                                     {/* Action Buttons */}
                                     <div className="flex gap-2">
-                                        {console.log(user?._id, typeof user?._id, summary.userId, typeof summary.userId)}
                                         {(user?._id == summary.userId ) && 
                                         <button 
                                             onClick={() => deleteSummary(summary._id)}
