@@ -1,5 +1,10 @@
 # Suvidha Foundation — Summarizer App
 
+## Hosted (production) — Live links
+
+- Frontend: https://ai-summarizer-app-pi.vercel.app/
+- Backend: https://ai-summarizer-app-c4hj.onrender.com
+
 ## Overview
 
 This repository contains a small full-stack summarization application built with a Node.js backend and a React (Vite) frontend. The project uses MongoDB for persistent storage, Redis for worker queueing, and a background worker to process summary jobs.
