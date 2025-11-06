@@ -8,6 +8,7 @@ import { AuthContext } from "../context/AuthContext"
 
         const [summaries, setSummaries] = useState([])
         const [showArticle, setShowArticle] = useState(false);
+        const [loading, setLoading] = useState(false)
         const navigate = useNavigate();
         const {user, token} = useContext(AuthContext)
         console.log(user,token)
@@ -28,6 +29,7 @@ import { AuthContext } from "../context/AuthContext"
 
     const fetchSummaries = async() => {
         try {
+            setLoading(true)
             const response = await axiosClient.get("/articles/summaries")
             const data = response.data;
             console.log(data);
@@ -40,6 +42,8 @@ import { AuthContext } from "../context/AuthContext"
             }else{
                 toast.error(error.response?.data?.message || error.message)
             }
+        } finally{
+            setLoading(false)
         }
     }
 
@@ -63,13 +67,15 @@ import { AuthContext } from "../context/AuthContext"
     useEffect(()=>{
         fetchSummaries();
     },[])
-// if (!user) {
-//   return (
-//     <div className="flex items-center justify-center py-20">
-//       <p>Loading...</p>
-//     </div>
-//   )
-// }else{
+if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center py-20 text-center text-slate-600">
+        <div className="w-16 h-16 rounded-full border-4 border-indigo-200 border-t-indigo-600 animate-spin mb-4"></div>
+        <p className="text-slate-600 text-lg font-medium">Loading your summaries...</p>
+        <p className="text-slate-400 text-sm mt-1">Please wait a moment</p>
+    </div>
+  )
+}else{
     return(
         
         <>
@@ -83,6 +89,7 @@ import { AuthContext } from "../context/AuthContext"
             <p className="text-slate-600 text-lg">Manage and review all your summaries</p>
         </div>
         {/* Summaries Grid or Empty State */}
+        
         <div className="grid gap-6">
         {summaries.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center text-slate-600">
@@ -218,4 +225,4 @@ import { AuthContext } from "../context/AuthContext"
         </>
     )
 }
-// }
+}
